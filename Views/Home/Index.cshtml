@@ -1,0 +1,120 @@
+﻿@model IEnumerable<petshop.Models.Products>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Carousel-->
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="@Url.Content("~/img/kiwi.png")" alt="First slide">
+        </div>
+    </div>
+</div>
+
+<!-- Section - POPULAR -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h1>POPULAR</h1>
+        <hr />
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 mt-4 row-cols-xl-4 justify-content-center">
+            @foreach (var product in Model.Where(p => p.Description == "popular"))
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        @if (product.DiscountPrice != null)
+                        {
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0; right: 0;">Sale</div>
+                        }
+                        <!-- Product image-->
+                        <a href="@Url.Action("Product", "Products", new { id = product.Id })">
+                            <img class="card-img-top" src="@Url.Content(product.UrlImg)" alt="..." />
+                        </a>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <p>@product.Name</p>
+                                <!-- Product price-->
+                                <p class="card-price">
+                                    @if (product.DiscountPrice != null && product.DiscountPrice < product.Price)
+                                    {
+                                        <span class="fw-bolder me-2">$@product.DiscountPrice</span>
+                                        <span class="fw-bolder text-muted text-decoration-line-through">$@product.Price</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fw-bolder">$@product.Price</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <form method="post" action="@Url.Action("AddtoCart", "Carts", new { productId = product.Id })">
+                            <input id="quantity" name="quantity" type="number" min="1" value="1" hidden />
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <button class="btn btn-outline-dark mt-auto" type="submit">Add to cart</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Section - New Arrival -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h1>New Arrival</h1>
+        <hr />
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 mt-4 row-cols-xl-4 justify-content-center">
+            @foreach (var product in Model.Where(p => p.Description == "new arrivel"))
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        @if (product.DiscountPrice != null)
+                        {
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0; right: 0;">Sale</div>
+                        }
+                        <!-- Product image-->
+                        <a href="@Url.Action("Product", "Products", new { id = product.Id })">
+                            <img class="card-img-top" src="@Url.Content(product.UrlImg)" alt="..." />
+                        </a>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <p>@product.Name</p>
+                                <!-- Product price-->
+                                <p class="card-price">
+                                    @if (product.DiscountPrice != null && product.DiscountPrice < product.Price)
+                                    {
+                                        <span class="fw-bolder me-2">$@product.DiscountPrice</span>
+                                        <span class="fw-bolder text-muted text-decoration-line-through">$@product.Price</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fw-bolder">$@product.Price</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <form method="post" action="@Url.Action("AddtoCart", "Carts", new { productId = product.Id })">
+                            <input id="quantity" name="quantity" type="number" min="1" value="1" hidden />
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <button class="btn btn-outline-dark mt-auto" type="submit">Add to cart</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
